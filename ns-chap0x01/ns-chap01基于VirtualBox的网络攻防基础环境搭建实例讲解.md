@@ -194,10 +194,8 @@
         ```
         iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o enp0s3 -j MASQUERADE
         ```
-        保存
-        ```
-        iptables-save
-        ```
+        此处不需再使用iptables-save，避免重复操作
+        
         ![](iptables.png)
 
     * 配置完成，此时靶机可以ping通攻击者主机

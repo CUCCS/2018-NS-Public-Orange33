@@ -192,7 +192,7 @@
 
     * 添加路由，允许192.168.100.0/24网段的访问
         ```
-        iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o enp0s3 -j MASQUERADE
+        iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE
         ```
         此处不需再使用iptables-save，避免重复操作
         

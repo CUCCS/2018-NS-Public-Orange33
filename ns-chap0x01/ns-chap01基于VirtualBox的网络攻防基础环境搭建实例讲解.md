@@ -34,11 +34,11 @@
         
         由于Attacker，Victim，Gateway使用同一块虚拟硬盘Attacker.vdi,故模式均为多重加载。
     * 设置网卡
-        * victim有一块网卡，类型为internet（内部网络）
+        * victim有一块网卡，类型为intnet（内部网络）
         
         ![](victim网卡.png)
 
-        * Gateway分配两块网卡，网卡1为NatNetwork，网卡2为internet。
+        * Gateway分配两块网卡，网卡1为NatNetwork，网卡2为intnet。
         
         ![](gateway网卡1.png)
 

@@ -146,7 +146,7 @@ wireshark查看server抓到的包发现进行了[SYN]和[RST,ACK]两步。
 
 Client中用Nmap扫描，与执行scapy代码方式的抓包结果相同。
 ```
-# -sS 
+# -sS TCP Stealth Scan
 nmap -sS -p80 -PN 192.168.100.4
 ```
 ![](images/nmap_stealth_closed.png)
@@ -179,11 +179,6 @@ nmap -sS -p80 -PN 192.168.100.4
 ```
 
 ![](images/nmap_stealth_open.png)
-
-TCP Stealth Scan
-
-* 优点：隐蔽性较全连接扫描好，因为很多系统对这种半扫描很少记录。
-* 缺点：构建 SYN 报文需要超级用户权限，且网络防护设备会有记录。
 
 
 ### **TCP XMAS scan**
@@ -234,7 +229,7 @@ server再监听收包`tcpdump -i eth0 -w stealth.pcap`，client执行代码[TCPX
 
 ![](images/xmas_open.jpg)
 
-Client中用Nmap扫描，显示80端口开放。抓包结果与执行scapy代码相同。
+Client中用Nmap扫描，显示80端口`open|filtered`。抓包结果与执行scapy代码相同。
 ```
 nmap -sX -p80 -PN 192.168.100.4
 ```
@@ -293,6 +288,7 @@ server再监听收包，client执行代码[UDPScan.py](UDPScan.py)：`python UDP
 扫描结果显示53端口处于`open|filtered`状态。
 
 `wireshark udp.pcap`
+
 ![](images/wireshark_udp_after.png)
 
 显示有UDP包。且无回复。

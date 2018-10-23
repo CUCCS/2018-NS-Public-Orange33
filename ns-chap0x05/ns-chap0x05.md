@@ -122,9 +122,9 @@ TCP Connect Scan：
 
 ### **TCP stealth scan**
 
-这种技术类似于TCP Connect扫描。客户端发送一个带有SYN标志集和连接到的端口号的TCP包。如果端口打开，服务器响应TCP包内的SYN和ACK标志。但这次客户端在TCP包中发送RST标志，而不是RST+ACK（TCP Connect扫描中的情况）。
+这种技术类似于TCP Connect扫描。客户端发送一个带有SYN标志集和连接到的端口号的TCP包。如果端口打开，服务器响应TCP包内的SYN和ACK标志。但这次客户端在TCP包中发送RST标志，而不是RST+ACK（TCP Connect扫描中的情况。
 
-TCP stealth scan被用来避免端口扫描检测防火墙。。
+TCP stealth scan被用来避免端口扫描检测防火墙。
 
 server监听eth0：`tcpdump -i eth0 -w stealth.pcap`
 

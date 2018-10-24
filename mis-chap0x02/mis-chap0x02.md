@@ -60,17 +60,17 @@ wireshark演示图片以老师做实验过程中抓的包1015.pcap为例
     # sort -u：去重
     # cat -v：用可打印字符表示不可打印字符，与空字符区分
 
-    tshark -r 1015.pcap -Y wlan.fc.type_subtype==0x08 -T fields -e wlan.sa -e wlan.ssid | sort -u | cat -v  > beacon1015.list
+    tshark -r 1015.pcap -Y wlan.fc.type_subtype==0x08 -T fields -e wlan.sa -e wlan.fixed.capabilities.privacy -e wlan.ssid | sort -u | cat -v  > beacon1015.list
     ```
     beacon1015.list
     ```
-    1c:dd:ea:7a:a1:fd	OPPO R11
-    28:2c:b2:9f:28:d0	A916
-    40:31:3c:00:be:89	Xiaomi_BE88
-    82:86:f2:29:c7:f0	XIN
-    88:11:96:c5:8c:7c	HUAWEI P20
-    b8:f8:83:5f:c2:f4	TP-LINK_C2F4
-    e0:05:c5:d5:88:76	gamelab
+    1c:dd:ea:7a:a1:fd	1	OPPO R11
+    28:2c:b2:9f:28:d0	1	A916
+    40:31:3c:00:be:89	1	Xiaomi_BE88
+    82:86:f2:29:c7:f0	1	XIN
+    88:11:96:c5:8c:7c	1	HUAWEI P20
+    b8:f8:83:5f:c2:f4	1	TP-LINK_C2F4
+    e0:05:c5:d5:88:76	1	gamelab
     ```
     beacon1020.list
     ```
@@ -183,7 +183,7 @@ wireshark演示图片以老师做实验过程中抓的包1015.pcap为例
 
     根据Probe Response获得SSID：
     ```
-    tshark -r 1015.pcap -Y wlan.fc.type_subtype==5 -T fields -e wlan.sa -e wlan.ssid | cat -v | sort -u > proresponse1015.list
+    tshark -r 1015.pcap -Y wlan.fc.type_subtype==5 -T fields -e wlan.sa -e wlan.fixed.capabilities.privacy -e wlan.ssid | cat -v | sort -u > proresponse1015.list
     ```
     proresponse1015.list
     ```
@@ -305,7 +305,7 @@ wireshark演示图片以老师做实验过程中抓的包1015.pcap为例
     ```
     由于没有抓到隐藏的SSID，故独立的ssid分别有9个，7个，15个
 
-    隐藏的SSID：不广播信标帧只回复帧响应；或者广播信标帧但SSID在机器上显示为空（实际上是用一串0x00填充）
+    隐藏的SSID：不广播beacon只回复probo response；或者广播beacon但SSID在机器上显示为空（实际上是用一串0x00填充）
 
     隐藏的SSID并不能提供可靠的安全，因为即使 SSID 隐藏而且不广播，当正常的客户端尝试连接到接入点时，它们就交换了探测请求和响应的封包。这些封包包含接入点的 SSID。由于这些封包没有加密，它们可以被非常轻易地嗅探来发现SSID。更主动的方法还有进行接触验证，强制客户端断开接入点的连接，通过发送伪造的解除验证封包。这些封包会强迫客户端重新连接到接入点上，从而获取 SSID。
 
@@ -388,7 +388,7 @@ wireshark演示图片以老师做实验过程中抓的包1015.pcap为例
 
 2. 如何分析出一个指定手机在抓包时间窗口内在手机端的无线网络列表可以看到哪些SSID？这台手机尝试连接了哪些SSID？最终加入了哪些SSID？
     
-    当收到了AP广播的Beacon帧且SSID不为空时，指定手机才能在无线网络列表中看到该SSID
+    当指定手机收到了AP广播的Beacon帧且SSID不为空时，可在手机端的无线网络列表可以这些。
 
     过滤条件：`wlan.fc.type_subtype == 0x08 && wlan.ssid`
 
@@ -444,6 +444,9 @@ wireshark演示图片以老师做实验过程中抓的包1015.pcap为例
     wlan.fc.type_subtype == 0x04   帧请求（Probe request）
     wlan.fc.type_subtype == 0x05   帧响应（Probe response）
     wlan.fc.type_subtype == 0x08   信标（Beacon）
+    wlan.fc.type_subtype == 0x0A   取消关联（Disassociate）  
+    wlan.fc.type_subtype == 0x0B   鉴权（Authentication）
+    wlan.fc.type_subtype == 0x0C   取消鉴权（Deauthentication）
     ```
 * wifi部分连接安全标准：
     * WEP：Wired Equivalency Protection，

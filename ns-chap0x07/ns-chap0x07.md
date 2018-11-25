@@ -367,7 +367,7 @@ Database: information_schema
 
 一番尝试下来，sqlmap的功能还是很强大的。
 
-## 6. 高级webshell一例
+## 7. 高级webshell一例
 * weevely
 
     weevely：一款使用python编写的webshell工具，集webshell生成和连接于一身，采用c/s模式构建，可以算作是linux下的一款php菜刀替代工具，具有很好的隐蔽性（生成随机参数且base64加密）。

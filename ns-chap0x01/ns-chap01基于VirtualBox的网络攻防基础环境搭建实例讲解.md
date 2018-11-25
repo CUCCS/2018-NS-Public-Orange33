@@ -230,7 +230,7 @@
 
         解决方法：打开sources.list配置文件，添加官方镜像源
         ```
-        leafpad /etc/network/sources.list
+        leafpad /etc/apt/sources.list
         ```
         写入：
         ```

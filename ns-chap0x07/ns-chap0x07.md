@@ -36,9 +36,7 @@
 
         ![](img/22.png)
 
-    结果显示无法连接到80端口，使用telnet、openssl结果均相同。
-
-    这里连接不成功也没关系，目的是获得HTTP报头，显然我们已经获取了足够的信息。
+    80端口和22端口均连接成功。
 
  ## 3.sql注入
 
@@ -83,7 +81,7 @@
 
         ![](img/union_1.png)
 
-        这里尝试到4时，发现原本的页面出现，且新增内容picture：2，由于联合查询要求多条查询语句的查询列数一致，说明该数据库的列数为4。
+        这里尝试到4时，发现原本的页面出现，且新增内容picture：2，由于联合查询要求多条查询语句的查询列数一致，说明当前查询对应的后台 SQL 语句的「查询结果集合」包含4列数据。
 
         URL：`http://192.168.56.5/cat.php?id=2 UNION SELECT 1,2,3,4`
 
@@ -99,7 +97,7 @@
 
         ![](img/order_4.png)
 
-        `ORDER BY 5`，出现错误信息`Unknown column '5' in 'order clause' `，同样可说明该数据库列数为4。
+        `ORDER BY 5`，出现错误信息`Unknown column '5' in 'order clause' `，同样可说明当前查询对应的后台 SQL 语句的「查询结果集合」包含4列数据。
 
         ![](img/order_5.png)
 
@@ -185,7 +183,7 @@
 
     * [John-The-Ripper](http://www.openwall.com/john/)
 
-        John-The-Ripper也需要事先知晓采用的是何种加密算法。
+        John-The-Ripper也需要事先知晓采用的是何种「散列」算法。
 
 * 破解后登录
 
@@ -419,7 +417,7 @@ Database: information_schema
         ```
         weevely http://192.168.56.5/backdoor.php passwd
         ```
-        这里上传失败了，猜测是因为目标网站`http://192.168.56.5`只有`http://192.168.56.5/admin/new.php`页面是允许上传文件的，而该页面需要用户登录才可达。将文件后缀名改为.php3也会出现同样的错误。
+        这里上传失败了，将文件后缀名改为`.php3`、`.php.test`也会出现同样的错误。
 
         ![](img/weevely.png)
 
